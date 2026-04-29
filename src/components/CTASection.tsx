@@ -1,49 +1,45 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const CTASection = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  return (
+    <section className="py-20 md:py-28 relative overflow-hidden">
+      <div className="mx-auto max-w-[1180px] px-6">
+        <div className="relative rounded-3xl overflow-hidden p-10 md:p-16 text-center"
+          style={{ background: "var(--gradient-primary)", boxShadow: "var(--shadow-glow)" }}>
+          {/* Subtle shimmer overlay */}
+          <div className="pointer-events-none absolute inset-0"
+            style={{ background: "linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 50%, rgba(255,255,255,0.06) 100%)" }} />
+          <div className="pointer-events-none absolute -top-20 -right-20 h-64 w-64 rounded-full opacity-20 animate-spin-slow"
+            style={{ background: "radial-gradient(circle, white, transparent)", filter: "blur(40px)" }} />
 
-    return (
-        <section className="py-24">
-            <div className="mx-auto max-w-[1120px] px-6">
-                <div
-                    className="relative overflow-hidden rounded-3xl px-8 py-20 text-center"
-                    style={{
-                        background: "var(--gradient-primary)",
-                        boxShadow: "var(--shadow-glow)",
-                    }}
-                >
-                    {/* Background orbs */}
-                    <div
-                        className="pointer-events-none absolute -top-16 -left-16 h-64 w-64 rounded-full opacity-20"
-                        style={{ background: "hsl(0 0% 100% / 0.3)", filter: "blur(60px)" }}
-                    />
-                    <div
-                        className="pointer-events-none absolute -bottom-16 -right-16 h-64 w-64 rounded-full opacity-20"
-                        style={{ background: "hsl(0 0% 100% / 0.3)", filter: "blur(60px)" }}
-                    />
-
-                    <div className="relative space-y-6 max-w-2xl mx-auto">
-                        <h2 className="text-3xl font-extrabold tracking-tight text-white md:text-[44px] leading-tight">
-                            Ready to optimize your resume?
-                        </h2>
-                        <p className="text-base text-white/80 leading-relaxed">
-                            Join 50,000+ job seekers who've already improved their chances with AI-powered resume optimization.
-                        </p>
-                        <button
-                            onClick={() => navigate("/optimizer")}
-                            className="inline-flex items-center gap-2.5 rounded-xl bg-white px-8 py-4 text-sm font-bold shadow-elevated transition-all duration-200 hover:-translate-y-1 hover:shadow-xl"
-                            style={{ color: "hsl(221 83% 53%)" }}
-                        >
-                            Upload Resume
-                            <ArrowRight className="h-4 w-4" />
-                        </button>
-                    </div>
-                </div>
+          <div className="relative space-y-6">
+            <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3.5 py-1.5 text-xs font-semibold text-white backdrop-blur-sm border border-white/20">
+              <Sparkles className="h-3.5 w-3.5" /> Get started in 30 seconds
             </div>
-        </section>
-    );
+            <h2 className="text-3xl font-extrabold text-white md:text-[44px] leading-tight">
+              Ready to Beat the ATS?
+            </h2>
+            <p className="text-base text-white/80 max-w-md mx-auto leading-relaxed">
+              Join 50,000+ job seekers who've improved their resume score and landed more interviews.
+              Free to start — no credit card required.
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+              <button onClick={() => navigate("/optimizer")}
+                className="inline-flex items-center gap-2.5 rounded-xl bg-white px-7 py-3.5 text-sm font-bold text-primary shadow-xl transition-all hover:scale-105 hover:shadow-2xl">
+                Optimize My Resume <ArrowRight className="h-4 w-4" />
+              </button>
+              <button onClick={() => navigate("/login")}
+                className="inline-flex items-center gap-2.5 rounded-xl border border-white/30 bg-white/10 backdrop-blur-sm px-6 py-3.5 text-sm font-semibold text-white transition-all hover:bg-white/20">
+                Sign In
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default CTASection;
