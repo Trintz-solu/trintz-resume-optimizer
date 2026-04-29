@@ -86,19 +86,33 @@ def health():
     return {"status": "ok", "version": "1.0.0"}
 
 
-# ─── Protected /optimize endpoint ────────────────────────────────────────────
-# This proxies to your AI backend OR handles optimization logic directly.
-# For now it calls the external optimizer, but first checks auth + usage gate.
-
-import httpx
-
-AI_BACKEND_URL = os.getenv("AI_BACKEND_URL", "http://localhost:8001")
-
-
-@app.post("/api/optimize")
-async def optimize_resume_protected(
+# ─── Protected endpoints ────────────────────────────────────────────
+# 1. Analyze: Fast keyword extraction and deterministic ATS scoring
+@app.post("/api/analyze")
+async def analyze_resume_endpoint(
     resume: UploadFile = File(...),
     job_description: str = Form(...),
+    current_user: models.User = Depends(auth_utils.get_current_user),
+    db: Session = Depends(get_db),
+):
+    from routers.resume_router import analyze_resume
+    
+    file_bytes = await resume.read()
+    try:
+        result = await analyze_resume(file_bytes, resume.filename, job_description)
+        from fastapi.responses import JSONResponse
+        return JSONResponse(result)
+    except ValueError as ve:
+        raise HTTPException(status_code=400, detail=str(ve))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+# 2. Optimize: Deep LLM rewrite, costs 1 usage credit
+@app.post("/api/optimize")
+async def optimize_resume_protected(
+    resume_text: str = Form(...),
+    job_description: str = Form(...),
+    mode: str = Form("advanced"),
     current_user: models.User = Depends(auth_utils.get_current_user),
     db: Session = Depends(get_db),
 ):
@@ -106,33 +120,56 @@ async def optimize_resume_protected(
 
     usage_count = get_total_usage(current_user.id, db)
 
-    # Enforce limit
     if current_user.plan == models.PlanType.free and usage_count >= FREE_LIMIT:
-        raise HTTPException(
-            status_code=403,
-            detail="Free plan limit reached. Upgrade to Pro.",
-        )
+        raise HTTPException(status_code=403, detail="Free plan limit reached. Upgrade to Pro.")
     elif current_user.plan == models.PlanType.pro and usage_count >= PRO_LIMIT:
-        raise HTTPException(
-            status_code=403,
-            detail="Pro limit reached. Purchase again or upgrade.",
-        )
+        raise HTTPException(status_code=403, detail="Pro limit reached. Please upgrade or purchase again.")
 
-    # Forward to AI processing logic
     from routers.resume_router import process_resume_optimization
     
-    file_bytes = await resume.read()
     try:
-        result = await process_resume_optimization(file_bytes, resume.filename, job_description)
+        result = await process_resume_optimization(resume_text, job_description, mode)
     except ValueError as ve:
         raise HTTPException(status_code=400, detail=str(ve))
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+    # Save to ResumeHistory
+    import json
+    from models import ResumeHistory, UsageLog
+    history_entry = ResumeHistory(
+        user_id=current_user.id,
+        original_text=resume_text,
+        optimized_text=json.dumps(result),
+        job_description=job_description,
+        ats_score=None
+    )
+    db.add(history_entry)
+
     # Log usage
-    log = models.UsageLog(user_id=current_user.id, action="optimize")
+    log = UsageLog(user_id=current_user.id, action="optimize")
     db.add(log)
     db.commit()
 
     from fastapi.responses import JSONResponse
     return JSONResponse(result)
+
+# 3. History: Get past optimized resumes for the dashboard
+@app.get("/api/resume/history")
+def get_resume_history(
+    current_user: models.User = Depends(auth_utils.get_current_user),
+    db: Session = Depends(get_db),
+):
+    from models import ResumeHistory
+    history = db.query(ResumeHistory).filter(ResumeHistory.user_id == current_user.id).order_by(ResumeHistory.created_at.desc()).all()
+    
+    return [
+        {
+            "id": h.id,
+            "job_description": h.job_description[:100] + "..." if len(h.job_description) > 100 else h.job_description,
+            "original_text_snippet": h.original_text[:100] + "...",
+            "optimized_text": h.optimized_text,
+            "created_at": h.created_at.isoformat(),
+        }
+        for h in history
+    ]

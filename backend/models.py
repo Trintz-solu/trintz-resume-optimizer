@@ -30,8 +30,21 @@ class User(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
     usage_logs = relationship("UsageLog", back_populates="user")
+    resume_history = relationship("ResumeHistory", back_populates="user")
 
 
+class ResumeHistory(Base):
+    __tablename__ = "resume_history"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    original_text = Column(String, nullable=False)
+    optimized_text = Column(String, nullable=False)
+    job_description = Column(String, nullable=False)
+    ats_score = Column(Integer, nullable=True)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    user = relationship("User", back_populates="resume_history")
 class UsageLog(Base):
     __tablename__ = "usage_logs"
 

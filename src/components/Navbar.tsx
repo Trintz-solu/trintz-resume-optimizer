@@ -1,4 +1,4 @@
-import { Zap, Menu, X, LogOut, User, Crown } from "lucide-react";
+import { Zap, Menu, X, LogOut, User, Crown, LayoutDashboard } from "lucide-react";
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
@@ -91,9 +91,13 @@ const Navbar = () => {
                     <p className="text-xs text-muted-foreground truncate">{user.email}</p>
                   </div>
                   <div className="p-1.5">
+                    <button onClick={() => { navigate("/dashboard"); setUserMenuOpen(false); }}
+                      className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-foreground hover:bg-accent transition-colors">
+                      <LayoutDashboard className="h-4 w-4 text-muted-foreground" /> Dashboard
+                    </button>
                     <button onClick={() => { navigate("/optimizer"); setUserMenuOpen(false); }}
                       className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-foreground hover:bg-accent transition-colors">
-                      <User className="h-4 w-4 text-muted-foreground" /> My Optimizer
+                      <Zap className="h-4 w-4 text-muted-foreground" /> New Resume
                     </button>
                     {user.plan === "free" && (
                       <button onClick={() => { navigate("/signup"); setUserMenuOpen(false); }}

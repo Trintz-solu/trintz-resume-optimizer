@@ -65,17 +65,14 @@ const Signup = () => {
                                 <Sparkles className="h-5 w-5" style={{ color: "hsl(221 83% 53%)" }} />
                             </div>
                             <div>
-                                <p className="text-xs font-semibold uppercase tracking-widest text-primary">{isEnterprise ? "Enterprise Plan" : "Pro Plan"}</p>
-                                <h1 className="text-xl font-extrabold tracking-tight text-foreground">Upgrade to {isEnterprise ? "Enterprise" : "Pro"}</h1>
+                                <h1 className="text-xl font-extrabold tracking-tight text-foreground">Create your account</h1>
+                                <p className="text-xs font-semibold text-muted-foreground mt-1">Get started with AI Resume Optimizer</p>
                             </div>
                         </div>
 
                         {/* Perks */}
                         <div className="mb-7 rounded-xl p-4 space-y-2" style={{ background: "hsl(221 83% 53% / 0.05)", border: "1px solid hsl(221 83% 53% / 0.15)" }}>
-                            {(isEnterprise
-                                ? ["Unlimited optimizations", "Bulk resume processing", "Team collaboration", "Priority support"]
-                                : ["10 optimized resumes", "Priority AI processing", "Advanced ATS scoring"]
-                            ).map((perk) => (
+                            {["AI-powered resume analysis", "Actionable improvement suggestions", "Career progress tracking"].map((perk) => (
                                 <div key={perk} className="flex items-center gap-2 text-xs font-medium text-foreground">
                                     <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-success" />
                                     {perk}
@@ -115,7 +112,7 @@ const Signup = () => {
                                 className="btn-gradient w-full h-11 rounded-xl text-sm font-semibold text-primary-foreground disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-1">
                                 {loading ? (
                                     <><div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />Creating account...</>
-                                ) : `Create Account — ${isEnterprise ? '₹4999' : '₹299'}`}
+                                ) : "Create Account"}
                             </button>
                         </form>
 

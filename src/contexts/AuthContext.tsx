@@ -37,7 +37,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             const data = await res.json();
             setUser(data);
         } catch {
-            // Token invalid — clear everything
             localStorage.removeItem("auth_token");
             setToken(null);
             setUser(null);
@@ -76,11 +75,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             body: JSON.stringify({ name, email, password }),
         });
         const data = await res.json();
-
-        if (!res.ok) {
-            throw new Error(data.detail || "Registration failed");
-        }
-
+        if (!res.ok) throw new Error(data.detail || "Registration failed");
         return data;
     };
 

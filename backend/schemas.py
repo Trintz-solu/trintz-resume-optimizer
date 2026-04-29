@@ -67,3 +67,58 @@ class RazorpayVerifyRequest(BaseModel):
     razorpay_order_id: str
     razorpay_signature: str
     plan: str
+
+
+# ─── Resume Optimization ─────────────────────────────────────────────────────
+
+from typing import List
+
+class PersonalInfo(BaseModel):
+    name: str = "Candidate Name"
+    email: Optional[str] = ""
+    phone: Optional[str] = ""
+    location: Optional[str] = ""
+    linkedin: Optional[str] = ""
+
+class ExperienceItem(BaseModel):
+    company: str
+    title: str
+    start_date: Optional[str] = ""
+    end_date: Optional[str] = "Present"
+    bullets: List[str] = []
+
+    # Using pydantic V2 or V1 validator depending on project.
+    # As it's mostly V1 in standard projects without @field_validator, we'll keep the user's syntax:
+    from pydantic import validator
+    @validator("bullets", pre=True, always=True)
+    def ensure_list(cls, v):
+        if isinstance(v, str):
+            return [v]
+        return v
+
+class ProjectItem(BaseModel):
+    name: str
+    start_date: Optional[str] = ""
+    end_date: Optional[str] = ""
+    bullets: List[str] = []
+
+    from pydantic import validator
+    @validator("bullets", pre=True, always=True)
+    def ensure_list(cls, v):
+        if isinstance(v, str):
+            return [v]
+        return v
+
+class EducationItem(BaseModel):
+    institution: str
+    degree: Optional[str] = ""
+    graduation_year: Optional[str] = ""
+
+class StructuredResume(BaseModel):
+    personal_info: PersonalInfo
+    summary: str
+    experience: List[ExperienceItem] = []
+    projects: List[ProjectItem] = []
+    skills: List[str] = []
+    education: List[EducationItem] = []
+    auto_applied_keywords: List[str] = []

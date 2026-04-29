@@ -22,3 +22,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Project specific
+node_modules
+dist
+backend/venv
+backend/__pycache__
+.env
+.python-version
+*.db
