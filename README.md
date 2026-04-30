@@ -1,73 +1,139 @@
-# Welcome to your Lovable project
+# 🚀 Trintz AI Resume Optimizer
 
-## Project info
+An AI-powered resume optimization platform that analyzes, rewrites, and generates ATS-friendly resumes tailored to job descriptions.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+---
 
-## How can I edit this code?
+## ✨ Features
 
-There are several ways of editing your application.
+* 🎯 **ATS Score Analysis**
 
-**Use Lovable**
+  * Keyword match
+  * Section completeness
+  * Content strength
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+* 🤖 **AI Resume Optimization**
 
-Changes made via Lovable will be committed automatically to this repo.
+  * Rewrites summary and experience
+  * Injects missing keywords automatically
+  * Follows Action + Tech + Impact format
 
-**Use your preferred IDE**
+* 📄 **Structured Resume Generation**
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+  * Strict JSON-based architecture
+  * Clean, professional 1-page layout
+  * ATS-compliant formatting
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+* 📊 **Before vs After Comparison**
 
-Follow these steps:
+  * Shows improvements clearly
+  * Explains optimization changes
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+* 📥 **PDF Export (WIP)**
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+  * Download ready-to-use resumes
 
-# Step 3: Install the necessary dependencies.
-npm i
+---
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+## 🧠 Tech Stack
+
+### Frontend
+
+* React + TypeScript + Vite
+* TailwindCSS
+* Component-based architecture
+
+### Backend
+
+* FastAPI (Python)
+* LLM Integration (OpenAI-compatible API)
+* Resume parsing (PDF/DOCX/TXT)
+
+### Database
+
+* SQLite (Currently)
+* PostgreSQL (Planned)
+
+---
+
+## ⚙️ How It Works
+
+1. Upload your resume
+2. Paste job description
+3. AI analyzes & scores resume
+4. Generates optimized content (structured JSON)
+5. Renders clean resume template
+6. Export as PDF
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the repo
+
+```bash
+git clone https://github.com/Trintz-solu/trintz-resume-optimizer.git
+cd trintz-resume-optimizer
+```
+
+---
+
+### 2. Setup Frontend
+
+```bash
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+---
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### 3. Setup Backend
 
-**Use GitHub Codespaces**
+```bash
+cd backend
+pip install -r requirements.txt
+uvicorn main:app --reload
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+---
 
-## What technologies are used for this project?
+## 🔐 Environment Variables
 
-This project is built with:
+Create a `.env` file:
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+```
+RESEND_API_KEY=your_key
+EMAIL_FROM=noreply@trintz.in
+AI_API_KEY=your_ai_key
+```
 
-## How can I deploy this project?
+---
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+## 🎯 Vision
 
-## Can I connect a custom domain to my Lovable project?
+To build a full-scale AI-powered resume builder that:
 
-Yes, you can!
+* Eliminates manual resume editing
+* Improves hiring success rates
+* Bridges the gap between students and job requirements
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+---
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+## 👥 Team Trintz
+
+* Gangeswara
+* Monish Narain
+
+---
+
+## 📌 Status
+
+🚧 Actively under development
+🔥 Core optimization engine completed
+🎯 Moving towards full SaaS product
+
+---
+
+## ⭐ Support
+
+If you like this project, give it a ⭐ on GitHub!
