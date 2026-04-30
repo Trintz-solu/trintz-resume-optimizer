@@ -14,7 +14,7 @@ export default defineConfig(({ mode }) => ({
     proxy: {
       // Proxy all /api/* requests to the FastAPI backend
       "/api": {
-        target: "http://localhost:8000",
+        target: "https://trintz-resume-optimizer.onrender.com",
         changeOrigin: true,
         secure: false,
       },
