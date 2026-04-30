@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 
-const API = "/api";
+import { API_URL } from "@/lib/config";
+
+const API = `${API_URL}/api`;
 
 interface User {
     id: number;

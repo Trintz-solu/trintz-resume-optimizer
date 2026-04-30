@@ -8,6 +8,7 @@ import OptimizedResult, { AnalysisResult, OptimizationResult } from "@/component
 import UsageBanner from "@/components/UsageBanner";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
+import { API_URL } from "@/lib/config";
 
 const FREE_LIMIT = 2;
 const PRO_LIMIT = 10;
@@ -48,7 +49,7 @@ const Optimizer = () => {
       const formData = new FormData();
       formData.append("resume", file);
       formData.append("job_description", jobDescription);
-      const response = await fetch("/api/analyze", {
+      const response = await fetch(`${API_URL}/api/analyze`, {
         method: "POST",
         headers: token ? { Authorization: `Bearer ${token}` } : {},
         body: formData,
@@ -77,7 +78,7 @@ const Optimizer = () => {
       formData.append("resume_text", analysisResult.resume_text_extracted);
       formData.append("job_description", jobDescription);
       formData.append("mode", mode);
-      const response = await fetch("/api/optimize", {
+      const response = await fetch(`${API_URL}/api/optimize`, {
         method: "POST",
         headers: token ? { Authorization: `Bearer ${token}` } : {},
         body: formData,

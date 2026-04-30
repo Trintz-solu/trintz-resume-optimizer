@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { Zap, Loader2, CheckCircle2, XCircle } from "lucide-react";
+import { API_URL } from "@/lib/config";
 
 const VerifyEmail = () => {
     const [searchParams] = useSearchParams();
@@ -21,7 +22,7 @@ const VerifyEmail = () => {
 
         const verify = async () => {
             try {
-                const res = await fetch(`/api/auth/verify-email?token=${token}`);
+                const res = await fetch(`${API_URL}/api/auth/verify-email?token=${token}`);
                 if (res.ok) {
                     setStatus("success");
                     toast.success("Email verified! Redirecting to login...");

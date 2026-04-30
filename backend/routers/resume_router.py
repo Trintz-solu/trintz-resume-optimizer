@@ -46,12 +46,13 @@ STRICT RULES — every rule is mandatory. Violating any will cause rejection:
    Implemented, Streamlined, Launched, Optimized, Migrated, Scaled, Engineered...)
 2. Every bullet MUST contain at least one quantified metric
    (%, $, users, ms, seconds, reduction, improvement, scale, revenue, count...)
-3. Each bullet MUST be a single line under 120 characters
-4. Summary: exactly 2-3 sentences, highlight top 3 skills, no filler words
+3. Provide 3-5 comprehensive bullets per role. Each bullet should be 1-2 lines detailing technical implementation and business impact.
+4. Summary: 3-4 impactful sentences emphasizing deep technical expertise and leadership.
 5. Inject missing JD keywords naturally — do NOT force them awkwardly
 6. NEVER invent data — only use facts present in the original resume
 7. Preserve all dates exactly as provided in the original resume
 8. Keep all personal contact information exactly as it appears
+9. The total generated text MUST be perfectly sized to fit on exactly ONE standard A4 page. Provide enough detail so the page is full, but NEVER exceed the one-page limit.
 
 Return ONLY valid JSON matching this exact structure. No markdown, no explanation:
 {

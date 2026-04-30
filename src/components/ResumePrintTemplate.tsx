@@ -66,7 +66,7 @@ const ResumePrintTemplate = forwardRef<HTMLDivElement, ResumePrintTemplateProps>
     const info = parsedData?.personal_info;
 
     return (
-        <div ref={ref} className="bg-white text-black p-10 w-[210mm] min-h-[297mm] mx-auto box-border font-sans">
+        <div ref={ref} className="bg-white text-black p-8 sm:p-10 w-[210mm] min-h-[297mm] mx-auto box-border font-sans">
             <style type="text/css" media="print">
                 {`
                   @page { size: A4; margin: 0; }
@@ -76,29 +76,29 @@ const ResumePrintTemplate = forwardRef<HTMLDivElement, ResumePrintTemplateProps>
                 `}
             </style>
             
-            <div className="max-w-4xl mx-auto space-y-4">
+            <div className="max-w-4xl mx-auto space-y-6">
                 {/* Dynamic header — no more John Doe */}
-                <div className="text-center border-b-[1.5px] border-gray-800 pb-3 mb-4">
-                    <h1 className="text-2xl font-black uppercase tracking-widest text-gray-900">{info?.name || "Name not found"}</h1>
-                    <p className="text-[11px] text-gray-600 mt-1 uppercase tracking-wider font-semibold">
+                <div className="text-center border-b-2 border-gray-800 pb-4 mb-2">
+                    <h1 className="text-3xl font-black uppercase tracking-widest text-gray-900 mb-2">{info?.name || "Name not found"}</h1>
+                    <p className="text-sm text-gray-700 uppercase tracking-wider font-semibold">
                         {[info?.email, info?.phone, info?.location].filter(Boolean).join(" • ")}
                     </p>
-                    {info?.linkedin && <p className="text-[11px] text-gray-600 mt-0.5 uppercase tracking-wider font-semibold">{info.linkedin}</p>}
+                    {info?.linkedin && <p className="text-sm text-gray-700 mt-1 uppercase tracking-wider font-semibold">{info.linkedin}</p>}
                 </div>
 
                 {/* Summary */}
                 {parsedData.summary && (
-                    <section className="mb-4">
-                        <h2 className="text-[11px] font-black uppercase tracking-[0.2em] border-b border-gray-300 pb-1 mb-2 text-gray-900">Professional Summary</h2>
-                        <p className="text-[11px] text-gray-800 leading-relaxed text-justify">{parsedData.summary}</p>
+                    <section>
+                        <h2 className="text-sm font-black uppercase tracking-[0.2em] border-b border-gray-300 pb-1 mb-2 text-gray-900">Professional Summary</h2>
+                        <p className="text-sm text-gray-800 leading-relaxed text-justify">{parsedData.summary}</p>
                     </section>
                 )}
 
                 {/* Skills */}
                 {parsedData.skills && parsedData.skills.length > 0 && (
-                    <section className="mb-4">
-                        <h2 className="text-[11px] font-black uppercase tracking-[0.2em] border-b border-gray-300 pb-1 mb-2 text-gray-900">Technical Skills</h2>
-                        <p className="text-[11px] text-gray-800 leading-relaxed text-justify">
+                    <section>
+                        <h2 className="text-sm font-black uppercase tracking-[0.2em] border-b border-gray-300 pb-1 mb-2 text-gray-900">Technical Skills</h2>
+                        <p className="text-sm text-gray-800 leading-relaxed text-justify">
                             {parsedData.skills.join(" • ")}
                         </p>
                     </section>
@@ -106,24 +106,24 @@ const ResumePrintTemplate = forwardRef<HTMLDivElement, ResumePrintTemplateProps>
 
                 {/* Work Experience */}
                 {parsedData.experience && parsedData.experience.length > 0 && (
-                    <section className="mb-4">
-                        <h2 className="text-[11px] font-black uppercase tracking-[0.2em] border-b border-gray-300 pb-1 mb-3 text-gray-900">Work Experience</h2>
+                    <section>
+                        <h2 className="text-sm font-black uppercase tracking-[0.2em] border-b border-gray-300 pb-1 mb-3 text-gray-900">Work Experience</h2>
                         <div className="space-y-4">
                             {parsedData.experience.map((job, idx) => (
                                 <div key={idx}>
                                     <div className="flex justify-between items-baseline mb-1">
-                                        <h3 className="text-[12px] font-bold text-gray-900">
+                                        <h3 className="text-sm font-bold text-gray-900">
                                             {job.title} <span className="font-normal text-gray-700">— {job.company}</span>
                                         </h3>
                                         {job.start_date && (
-                                            <span className="text-[10px] text-gray-600 font-medium whitespace-nowrap">
+                                            <span className="text-xs text-gray-600 font-medium whitespace-nowrap">
                                                 {job.start_date} – {job.end_date || "Present"}
                                             </span>
                                         )}
                                     </div>
                                     <ul className="list-disc pl-5 space-y-1">
                                         {job.bullets?.map((bullet, i) => (
-                                            <li key={i} className="text-[11px] text-gray-800 leading-relaxed pl-1">{bullet}</li>
+                                            <li key={i} className="text-sm text-gray-800 leading-relaxed pl-1">{bullet}</li>
                                         ))}
                                     </ul>
                                 </div>
@@ -134,22 +134,22 @@ const ResumePrintTemplate = forwardRef<HTMLDivElement, ResumePrintTemplateProps>
 
                 {/* Projects */}
                 {parsedData.projects && parsedData.projects.length > 0 && (
-                    <section className="mb-4">
-                        <h2 className="text-[11px] font-black uppercase tracking-[0.2em] border-b border-gray-300 pb-1 mb-3 text-gray-900">Projects</h2>
+                    <section>
+                        <h2 className="text-sm font-black uppercase tracking-[0.2em] border-b border-gray-300 pb-1 mb-3 text-gray-900">Projects</h2>
                         <div className="space-y-4">
                             {parsedData.projects.map((proj, idx) => (
                                 <div key={idx}>
                                     <div className="flex justify-between items-baseline mb-1">
-                                        <h3 className="text-[12px] font-bold text-gray-900">{proj.name}</h3>
+                                        <h3 className="text-sm font-bold text-gray-900">{proj.name}</h3>
                                         {proj.start_date && (
-                                            <span className="text-[10px] text-gray-600 font-medium whitespace-nowrap">
+                                            <span className="text-xs text-gray-600 font-medium whitespace-nowrap">
                                                 {proj.start_date} – {proj.end_date || "Present"}
                                             </span>
                                         )}
                                     </div>
                                     <ul className="list-disc pl-5 space-y-1">
                                         {proj.bullets?.map((bullet, i) => (
-                                            <li key={i} className="text-[11px] text-gray-800 leading-relaxed pl-1">{bullet}</li>
+                                            <li key={i} className="text-sm text-gray-800 leading-relaxed pl-1">{bullet}</li>
                                         ))}
                                     </ul>
                                 </div>
@@ -160,11 +160,11 @@ const ResumePrintTemplate = forwardRef<HTMLDivElement, ResumePrintTemplateProps>
 
                 {/* Education */}
                 {parsedData.education && parsedData.education.length > 0 && (
-                    <section className="col-span-2">
-                        <h2 className="text-[11px] font-black uppercase tracking-[0.2em] border-b border-gray-300 pb-1 mb-3 text-gray-900">Education</h2>
+                    <section>
+                        <h2 className="text-sm font-black uppercase tracking-[0.2em] border-b border-gray-300 pb-1 mb-3 text-gray-900">Education</h2>
                         <div className="space-y-2">
                             {parsedData.education.map((edu, idx) => (
-                                <div key={idx} className="flex justify-between items-start text-[11px]">
+                                <div key={idx} className="flex justify-between items-start text-sm">
                                     <div>
                                         <p className="font-bold text-gray-900">{edu.institution}</p>
                                         <p className="text-gray-800 italic">{edu.degree}</p>

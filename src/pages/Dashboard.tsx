@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Zap, FileText, Clock, BarChart2, TrendingUp, Crown, ArrowRight, Sparkles } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import { useAuth } from "@/contexts/AuthContext";
+import { API_URL } from "@/lib/config";
 
 interface HistoryItem {
   id: number;
@@ -20,7 +21,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (!token) return;
-    fetch("/api/resume/history", { headers: { Authorization: `Bearer ${token}` } })
+    fetch(`${API_URL}/api/resume/history`, { headers: { Authorization: `Bearer ${token}` } })
       .then((r) => r.json())
       .then((data) => setHistory(Array.isArray(data) ? data : []))
       .catch(() => setHistory([]))

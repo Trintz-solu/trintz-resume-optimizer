@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Zap, ArrowLeft, Mail } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "sonner";
+import { API_URL } from "@/lib/config";
 
 const ForgotPassword = () => {
     const navigate = useNavigate();
@@ -13,7 +14,7 @@ const ForgotPassword = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            const res = await fetch("/api/auth/request-password-reset", {
+            const res = await fetch(`${API_URL}/api/auth/request-password-reset`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email })

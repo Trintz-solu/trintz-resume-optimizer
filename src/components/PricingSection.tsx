@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
+import { API_URL } from "@/lib/config";
 
 declare global { interface Window { Razorpay: any; } }
 
@@ -83,7 +84,7 @@ const PricingSection = () => {
     if (!scriptLoaded) { toast.error("Failed to load payment gateway."); setProLoading(false); return; }
     let orderData: { order_id: string; amount: number; currency: string; key_id: string };
     try {
-      const res = await fetch("/api/billing/create-order", {
+      const res = await fetch(`${API_URL}/api/billing/create-order`, {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify({ plan: planId }),
@@ -102,7 +103,7 @@ const PricingSection = () => {
       theme: { color: "#6366F1" },
       handler: async (response: { razorpay_payment_id: string; razorpay_order_id: string; razorpay_signature: string }) => {
         try {
-          const verifyRes = await fetch("/api/billing/verify-payment", {
+          const verifyRes = await fetch(`${API_URL}/api/billing/verify-payment`, {
             method: "POST",
             headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
             body: JSON.stringify({ ...response, plan: planId }),
